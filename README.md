@@ -20,7 +20,7 @@
 3. Using conductive thread, sew underneath the mat following the pattern of the blue lines below. Ensure that the thread is connected to the foil tape on the top.
 
 4. Leave strands of conductive thread at the ends to later connect with the Makey Makey.
-
+![game instruction screen](/_github/conductive_thread.png)
 ![game instruction screen](/_github/mat_back.png)
 
 ### 2. Connect your Mat controller to the Makey Makey!
