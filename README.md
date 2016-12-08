@@ -88,7 +88,31 @@ Click this link to play the [game](http://gongme.dev.fast.sheridanc.on.ca/fruita
 
 2. Connect LED light negative to breadboard negative, ground to breadboard ground
 
-Complete Diagram
+### Complete Diagram
 ![game instruction screen](/_github/diagram.png)
+
+### IV. Build the game
+
+Build the game using [Zim](http://zimjs.com/code/), a JavaScript framework for HTML Canvas powered by CreateJS
+
+1. Load game assets
+2. Run a startGame function to call on all functions at the start of the game
+3. Define character assets and their position
+4. Define game item assets and put them in containers
+5. Add a parallax background scroller
+6. Call music assets
+7. Define lanes
+8. Add event listeners to control movement of players
+9. Add scoring system and progress bar
+10. Function to clone game items, position and set speed
+11. Clone items are added to a container
+12. Animate the coins and traps downward with an ease of linear
+13. Coins and traps fall randomly at different speeds (varied by wait time)
+14. Function for hit tests when game items (coin or trap) hits a character
+15. Increment score when cat collects a coin
+16. Sends to gameover screen when cat hits a rock
+17. Deletes traps if they go off stage
+18. Hit test to check if fruit and trap overlap, removes trap if they do
+
 
 
