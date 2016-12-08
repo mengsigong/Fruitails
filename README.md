@@ -24,7 +24,6 @@ Click this link to play the [game](http://gongme.dev.fast.sheridanc.on.ca/fruita
 
 4. Leave strands of conductive thread at the ends to later connect with the Makey Makey.
 ![game instruction screen](/_github/conductive_thread.png)
-![game instruction screen](/_github/mat_back.png)
 
 ### II. Connect your mat controller to the Makey Makey!
 
