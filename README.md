@@ -114,5 +114,6 @@ Build the game using [Zim](http://zimjs.com/code/), a JavaScript framework for H
 18. Hit test to check if fruit and trap overlap, removes trap if they do
 19. Create links between index screen, instructions screen, game and gameover screen
 
+![cat1](/_github/cat1.png)![cat2](/_github/cat2.png)
 
 
