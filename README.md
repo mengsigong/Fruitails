@@ -40,8 +40,9 @@
 
 3. In settings.h tab, modify the inputs for the click button pad, space button pad, right arrow pad and left arrow pad to ‘a’, ‘s’, ‘k’, and ‘l’.
 
-Modifications to the ‘settings.h’ settings from makey_makey_1_4_2.ino (Arduino IDE)
 ```
+//Modifications to the ‘settings.h’ settings from makey_makey_1_4_2.ino (Arduino IDE)
+
 int keyCodes[NUM_INPUTS] = {
 
   KEY_UP_ARROW,      // up arrow pad
@@ -72,6 +73,7 @@ int keyCodes[NUM_INPUTS] = {
 ```
 
 4. As depicted in the diagram below, use alligator clips to connect the following together (from the back of the Makey Makey to the end strands of the conductive thread from the mat).
+![game instruction screen](/_github/alligator_connect copy.png)
 
 5. 
 
