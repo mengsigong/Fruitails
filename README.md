@@ -108,10 +108,11 @@ Build the game using [Zim](http://zimjs.com/code/), a JavaScript framework for H
 12. Animate the coins and traps downward with an ease of linear
 13. Coins and traps fall randomly at different speeds (varied by wait time)
 14. Function for hit tests when game items (coin or trap) hits a character
-15. Increment score when cat collects a coin
-16. Sends to gameover screen when cat hits a rock
+15. Increment score when character collects a coin
+16. Sends to gameover screen when character hits a rock
 17. Deletes traps if they go off stage
 18. Hit test to check if fruit and trap overlap, removes trap if they do
+19. Create links between index screen, instructions screen, game and gameover screen
 
 
 
