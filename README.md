@@ -6,13 +6,14 @@
 
 ## Instructions - How To Build
 
-### 1. Build your own Mat controller!
+### I. Build your own Mat controller!
 
 #### Materials:
 * Aluminum foil tape
 * Conductive thread
 * Needle
 
+#### Steps:
 1. Divide mat into four equal quadrants.
 
 2. Use Aluminum foil tape to map out the shape of the arrows on the top of the mat.
@@ -23,7 +24,7 @@
 ![game instruction screen](/_github/conductive_thread.png)
 ![game instruction screen](/_github/mat_back.png)
 
-### 2. Connect your Mat controller to the Makey Makey!
+### II. Connect your Mat controller to the Makey Makey!
 
 #### Materials:
 * Classic Makey Makey board
@@ -32,8 +33,9 @@
 * Alligator clips
 * Wires
 
+#### Steps:
 1. Plug in the Classic Makey Makey board with the USB cord to your computer.
 
-2. Download and install the Arduino IDE with the Makey Makey Firmware using the following online resource (http://www.makeymakey.com/remap/).
+2. Download and install the Arduino IDE with the Makey Makey Firmware using the following online resource [makey makey remap link](http://www.makeymakey.com/remap/).
 
 3. In settings.h tab, modify the inputs for the click button pad, space button pad, right arrow pad and left arrow pad to ‘a’, ‘s’, ‘k’, and ‘l’.
