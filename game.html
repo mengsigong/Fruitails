@@ -1,0 +1,395 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Fruitails</title>
+
+<!-- for CreateJS and ZIMjs http://zimjs.com - free to modify - Dan Zen 2016 -->
+<!-- see http://zimjs.com/templates for more templates and meta tags -->
+
+<script>var zon = true; // true for comments from zim code</script>
+<script src="https://d309knd7es5f10.cloudfront.net/zim_4.2.0.js"></script>
+<!-- use zimjs.com/code/distill for minified individual functions! -->
+<script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+<!-- or can go to createjs.com for individual modules -->
+<link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah" rel="stylesheet">
+
+<style>
+    body {margin:0px; padding:0px; background-color:"green"; font-family: 'Gloria Hallelujah', cursive;}
+    #myCanvas {position:absolute; background-color:"green"; background-image: url(_assets/bgfull.png);background-position: center; font-family: 'Gloria Hallelujah', cursive;}
+</style>
+
+<script>
+
+// SCALING OPTIONS
+// scaling can have values as follows with full being the default
+// "fit"    sets canvas and stage to dimensions and scales to fit inside window size
+// "outside"    sets canvas and stage to dimensions and scales to fit outside window size
+// "full"   sets stage to window size with no scaling
+// "tagID"  add canvas to HTML tag of ID - set to dimensions if provided - no scaling
+
+var scaling = "fit"; // this will resize to fit inside the screen dimensions
+var width = 1920;
+var height = 1080;
+var frame = new zim.Frame(scaling, width, height);
+frame.on("ready", function() {
+    zog("OUR GAME IS READY! EAT MY FRUITS!");
+
+    var stage = frame.stage;
+    var stageW = frame.width;
+    var stageH = frame.height;
+
+    frame.loadAssets(["cat1.png", "cat2.png", "coin1.png", "coin2.png", "trap1.png", "trap2.png", "YetitPetit.mp3", "bgfull.png", "bgtrees.png", "collect.wav", "move.wav", "die.mp3"], "_assets/");
+    frame.on("complete", function() {
+
+        //////// INITIATE GAME ////////
+        
+        // this function initiates the main interval
+        // the function is called at the bottom
+        function startGame() {
+            senpaiBG();
+            setInterval(animate, 2000);
+            setInterval(catHitTest, 50);
+            BGmusic.play();
+        };    
+        
+        //////// PLAYERS ////////
+        
+        // defines the assets for the two cats
+        var cat1 = frame.asset("cat1.png");
+        var cat2 = frame.asset("cat2.png");
+        
+        // adds them to the stage
+        stage.addChild(cat1);
+        stage.addChild(cat2);
+        
+        // defines player 1 positioning
+        cat1.regX = cat1.width/2;
+        cat1.regY = cat1.height/2;
+        cat1.x = stageW / 8;
+        cat1.y = stageH - cat1.height/2 - 10;
+        
+        // defines player 2 positioning
+        cat2.regX = cat2.width/2;
+        cat2.regY = cat2.height/2;
+        cat2.x = stageW / 8 * 5;
+        cat2.y = stageH - cat2.height/2 - 10;
+
+
+        //////// ITEMS ////////
+        
+        // creates contains in which items will be deposited
+        // easier to control them that way
+        var coins = new zim.Container();
+        stage.addChild(coins);
+        var coin1 = frame.asset("coin1.png");
+        var coin2 = frame.asset("coin2.png");
+        
+        var traps = new zim.Container();
+        stage.addChild(traps);
+        var trap1 = frame.asset("trap1.png");
+        var trap2 = frame.asset("trap2.png");
+
+        //////// MECHANICS ////////
+        
+        // PARALLAX
+            
+        function senpaiBG() {
+            var animation = new zim.Container(stageW, stageH);
+            stage.addChildAt(animation,0);
+
+            var bg = frame.asset("bgfull.png");
+               animation.addChild(bg);
+
+            var background = new zim.Scroller({backing:bg, speed:-4, horizontal: false, gapFix: 4.75, fps: 60});
+
+            //another scroller for trees (Parallax)
+            var trees = frame.asset("bgtrees.png");
+               animation.addChild(trees);
+        
+            var trees2 = new zim.Scroller({backing:trees, speed:-3, horizontal: false, gapFix: 4.75, fps: 60});
+        }
+        
+        // music
+        
+        var BGmusic = frame.asset("YetitPetit.mp3");
+        var sound = frame.asset("collect.wav");
+        var moveSound = frame.asset("move.wav");
+        var dieSound = frame.asset("die.mp3");
+        
+        // defines lanes
+        var lane1 = (stageW/8);
+        var lane2 = (stageW/8)*3;
+        var lane3 = (stageW/8)*5;
+        var lane4 = (stageW/8)*7;
+
+        var lanes = [lane1, lane2, lane3, lane4];
+        
+        // EVENT LISTENER TO CONTROL PLAYERS
+        
+        window.addEventListener("keydown", function(e){
+            var k = e.keyCode
+                        
+            if(k==83&&cat1.x==stageW / 8){
+                cat1.move(stageW/8*3,null);
+                cat1.scaleX = -1;
+                moveSound.play();
+
+            }
+            else if(k==65&&cat1.x==(stageW/8)*3){
+                cat1.move(stageW/8,null);
+                cat1.scaleX = 1;
+                moveSound.play();
+            }
+            else if(k==76&&cat2.x==(stageW/8)*5){
+                cat2.move(stageW/8*7,null);
+                cat2.scaleX = -1;
+                moveSound.play();
+            }
+            else if(k==75&&cat2.x==(stageW/8)*7){
+                cat2.move(stageW/8*5,null);
+                cat2.scaleX = 1;
+                moveSound.play();
+            };
+//            else {};
+    });
+        
+        // SCORING SYSTEM //
+        var score = 0;
+        var scoring;
+        var scoreScale = 1;
+        var progressBar = new zim.Rectangle(50, 800, "tomato");
+        var scoreBar = new zim.Rectangle(50, scoreScale, "lime");
+
+        var scoreLabel = new zim.Label({
+            text: score,
+            size: 30,
+            color: "gold",
+            shadowColor: "grey",
+            align: "right",
+            font: 'Gloria Hallelujah',
+        });
+                                         
+        stage.addChild(progressBar);
+        progressBar.x = stageW-75;
+        progressBar.y = 24;
+        
+        stage.addChild(scoreBar);
+        scoreBar.x = stageW-75;
+        scoreBar.y = 824;
+        scoreBar.regY = scoreBar.height;
+        
+        stage.addChild(scoreLabel);
+        scoreLabel.x = stageW-20;
+        scoreLabel.y = 850;
+        
+        ///////////////////////////////////////////////////////
+
+        function animate() {
+            
+             // clones the items so they can be reused endlessly
+            var coinClone1 = coin1.clone();
+            var coinClone2 = coin2.clone();
+        
+            var trapClone1 = trap1.clone();
+            var trapClone2 = trap2.clone();
+            
+            var speed = 4000; //main falling speed
+            var speed2 = 1500; //alternate speed for randomization
+            var speed3 = 3000; //alternate speed for randomization
+            
+            // sets the positioning for the cloned items
+            coinClone1.regX = coinClone1.width/2;
+            coinClone1.regY = coinClone1.height;
+            coinClone1.x = lanes[Math.round(zim.rand(0,1))]
+            coinClone1.y = -10;
+            
+            coinClone2.regX = coinClone2.width/2;
+            coinClone2.regY = coinClone2.height;
+            coinClone2.x = lanes[Math.round(zim.rand(2,3))]
+            coinClone2.y = -10;
+            
+            trapClone1.regX = trapClone1.width/2;
+            trapClone1.regY = trapClone1.height;
+            trapClone1.x = lanes[Math.round(zim.rand(0,1))]
+            trapClone1.y = -10;
+            
+            trapClone2.regX = trapClone2.width/2;
+            trapClone2.regY = trapClone2.height;
+            trapClone2.x = lanes[Math.round(zim.rand(2,3))]
+            trapClone2.y = -10; 
+
+            // adds the cloned items to the containers
+            coins.addChild(coinClone1, coinClone2); 
+            traps.addChild(trapClone1, trapClone2);
+            
+            // moves the containers
+            // function(obj, x, y, duration, ease, callBack, params, delay, loop, loopCount, loopWait, blahblahblah)
+            trapClone1.move({  
+                    y:stageH+200, 
+                    time:speed, 
+                    call:catHitTest,
+                    wait:Math.round(zim.rand(speed2, speed3)),
+                    ease:"linear",
+                    });
+            trapClone2.move({  
+                    y:stageH+200, 
+                    time:speed, 
+                    call:catHitTest,
+                    wait:Math.round(zim.rand(speed2, speed3)),
+                    ease:"linear",
+                    });
+            coinClone1.move({  
+                    y:stageH+200, 
+                    time:speed, 
+                    call:catHitTest,
+                    wait:Math.round(zim.rand(speed2, speed3)),
+                    ease:"linear",
+                    });
+            coinClone2.move({  
+                    y:stageH+200, 
+                    time:speed, 
+                    call:catHitTest,
+                    wait:Math.round(zim.rand(speed2, speed3)),
+                    ease:"linear",
+                    });
+            
+            // regular wait
+            //wait:2500,
+            // saving as backup
+            
+            // temporary zog to display number of children in each container
+            // as well as the y-positioning of the coins container
+            //zog(coins.numChildren);
+            //zog(traps.numChildren);
+            //zog(coins.y);
+            
+            //zog(coinClone1.x);
+            //zog(trapClone1.x);
+          
+            // mandatory stage update
+            stage.update();
+        }; // end of animate()
+        
+        // this function deals with hit tests
+        function catHitTest() {
+            
+            //defines variables to be used in the loops
+            var trap;
+            var coin;
+            
+            //zog("catHitTest is executing!");
+            
+            // the main FOR LOOP
+            for (var i=0; i < traps.numChildren; i++) {
+                
+                //zog("This catHitTest FOR loop is running!");
+                
+                // TRAPS //
+                trap = traps.getChildAt(i);
+                
+                // if cat1 hits the traps
+                if (zim.hitTestBounds(cat1, trap)) {
+                    // game over
+                    zgo('./gameover.html');
+                    // score -= 1;
+                    // scoreScale -= 1;
+                    // scoreLabel.text = score;
+                    // traps.removeChild(trap);
+                    // dieSound.play();
+                    // zim.scaleTo(scoreBar, progressBar, 100, scoreScale, "both");
+                    // stage.update();
+                };
+                
+                // if cat2 hits the traps
+                if (zim.hitTestBounds(cat2, trap)) {
+                    // game over
+                    zgo('./gameover.html');
+                    // scoreScale -= 1;
+                    // score -= 1;
+                    // scoreLabel.text = score;
+                    // traps.removeChild(trap);
+                    // dieSound.play();
+                    // zim.scaleTo(scoreBar, progressBar, 100, scoreScale, "both");
+                    // stage.update();
+                };
+                
+                // deletes traps if they go off-stage
+                if (trap.y >= stageH+100) {
+                    //zog("The traps have gone off screen!");
+                    traps.removeChild(trap);
+                    stage.update();
+                };    
+            
+                
+                // COINS //
+                coin = coins.getChildAt(i);
+                
+                // if cat1 collects coins
+                if (zim.hitTestBounds(cat1, coin)) {
+                    scoreScale += 1;
+                    score += 1;
+                    scoreLabel.text = score;
+                    coins.removeChild(coin);
+                    sound.play();
+                    zim.scaleTo(scoreBar, progressBar, 100, scoreScale, "both");
+                    stage.update();
+                }; 
+                
+                // if cat2 collects coins
+                if (zim.hitTestBounds(cat2, coin)) {
+                    scoreScale += 1;
+                    score += 1;
+                    scoreLabel.text = score;
+                    coins.removeChild(coin);
+                    sound.play();
+                    zim.scaleTo(scoreBar, progressBar, 100, scoreScale, "both");
+                    stage.update();
+                };
+                
+                // deletes coins if they go off-stage
+                if (coin.y >= stageH+100) {
+                    //zog("The coins have gone off screen!");
+                    coins.removeChild(coin);
+                    stage.update();
+                };
+                
+                // IF FRUIT TOUCHES ROCKS >:()
+                if (zim.hitTestBounds(coin, trap)) {
+                    traps.removeChild(trap);
+                    stage.update();
+                };
+
+                if (score==100){
+                    score=0;
+                    scoreScale = 1;
+                    stage.update();
+                }
+                
+            }; // end of FOR loop
+            stage.update();
+        }; // end of catHitTest function
+        
+        // Starts the game //
+        startGame();
+        // Starts the game //
+
+        stage.update(); // mandatory stage update
+
+    }); // end of assets complete
+
+    stage.update(); // mandatory stage update
+
+}); // end of ready
+
+</script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimal-ui" />
+
+</head>
+
+<body>
+<!-- canvas with id="myCanvas" is made by zim Frame -->
+
+</body>
+</html>

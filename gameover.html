@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Fruitails</title>
+
+<!-- for CreateJS and ZIMjs http://zimjs.com - free to modify - Dan Zen 2016 -->
+<!-- see http://zimjs.com/templates for more templates and meta tags -->
+
+<script>var zon = true; // true for comments from zim code</script>
+<script src="https://d309knd7es5f10.cloudfront.net/zim_4.2.0.js"></script>
+<!-- use zimjs.com/code/distill for minified individual functions! -->
+<script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+<!-- or can go to createjs.com for individual modules -->
+<link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah" rel="stylesheet">
+
+<style>
+    body {margin:0px; padding:0px; background-color:"green"; font-family: 'Gloria Hallelujah', cursive;}
+    #myCanvas {position:absolute; background-color:"green"; background-image: url(_assets/bgfull.png);background-position: center; font-family: 'Gloria Hallelujah', cursive;}
+</style>
+
+<script>
+
+// SCALING OPTIONS
+// scaling can have values as follows with full being the default
+// "fit"    sets canvas and stage to dimensions and scales to fit inside window size
+// "outside"    sets canvas and stage to dimensions and scales to fit outside window size
+// "full"   sets stage to window size with no scaling
+// "tagID"  add canvas to HTML tag of ID - set to dimensions if provided - no scaling
+
+var scaling = "fit"; // this will resize to fit inside the screen dimensions
+var width = 1920;
+var height = 1080;
+var frame = new zim.Frame(scaling, width, height);
+frame.on("ready", function() {
+    zog("OUR GAME IS READY! EAT MY FRUITS!");
+
+    var stage = frame.stage;
+    var stageW = frame.width;
+    var stageH = frame.height;
+
+    frame.loadAssets(["cat1.png", "cat2.png", "coin1.png", "coin2.png", "trap1.png", "trap2.png", "YetitPetit.mp3", "die.mp3", "bgfull.png", "bgtrees.png", "gameover.png"], "_assets/");
+    frame.on("complete", function() {
+
+    //////// MUSIC //////////
+    var dieSound = frame.asset("die.mp3");
+    dieSound.play();
+
+    //////// BACKGROUND ////////
+
+
+        var animation = new zim.Container(stageW, stageH);
+        stage.addChildAt(animation,0);
+
+        var bg = frame.asset("bgfull.png");
+           animation.addChild(bg);
+
+        var background = new zim.Scroller({backing:bg, speed:-3, horizontal: false, gapFix: 4.75, fps: 60});
+
+        //another scroller for trees (Parallax)
+        var trees = frame.asset("bgtrees.png");
+           animation.addChild(trees);
+    
+        var trees2 = new zim.Scroller({backing:trees, speed:-2, horizontal: false, gapFix: 4.75, fps: 60});
+
+        //gameover layover
+		var foreground = frame.asset("gameover.png");
+			foreground.center(stage);
+    
+//////// BUTTON ////////
+
+	var label = new zim.Label({
+		text: 'PLAY AGAIN',
+		size: 50,
+		font: "Gloria Hallelujah",
+		color: "white",
+		rollColor: "white",
+		fontOptions: "bold"
+	});
+
+	var button = new zim.Button({
+		label:label,
+		width: 390,
+		height: 110,
+		color: "#f06e57",
+		rollColor: "violet",
+		//borderThickness: 8,
+		//borderColor: "white",
+		gradient: .3,
+		corner: 50
+	})
+	button.center(stage); // this adds to stage as well otherwise stage.addChild(button);
+	
+	window.addEventListener("keydown", function(e){
+          var k = e.keyCode;
+		if(k==83||k==65||k==76||k==75){
+              zgo('./game.html')};
+	});
+
+	stage.update();
+       });
+
+    stage.update(); // mandatory stage update
+
+}); // end of ready
+
+</script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimal-ui" />
+
+</head>
+
+<body>
+<!-- canvas with id="myCanvas" is made by zim Frame -->
+
+</body>
+</html>
+
