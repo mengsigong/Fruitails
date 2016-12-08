@@ -23,3 +23,17 @@
 ![game instruction screen](/_github/conductive_thread.png)
 ![game instruction screen](/_github/mat_back.png)
 
+### 2. Connect your Mat controller to the Makey Makey!
+
+#### Materials:
+* Classic Makey Makey board
+* Breadboard
+* LED lights
+* Alligator clips
+* Wires
+
+1. Plug in the Classic Makey Makey board with the USB cord to your computer.
+
+2. Download and install the Arduino IDE with the Makey Makey Firmware using the following online resource (http://www.makeymakey.com/remap/).
+
+3. In settings.h tab, modify the inputs for the click button pad, space button pad, right arrow pad and left arrow pad to ‘a’, ‘s’, ‘k’, and ‘l’.
