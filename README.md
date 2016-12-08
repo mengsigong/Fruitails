@@ -23,7 +23,7 @@ Click this link to play the [game](http://gongme.dev.fast.sheridanc.on.ca/fruita
 3. Using conductive thread, sew underneath the mat following the pattern of the blue lines below. Ensure that the thread is connected to the foil tape on the top.
 
 4. Leave strands of conductive thread at the ends to later connect with the Makey Makey.
-![game instruction screen](/_github/conductive_thread.png)
+![game instruction screen](/_github/conductive_thread_2.png)
 
 ### II. Connect your mat controller to the Makey Makey!
 
