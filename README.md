@@ -47,7 +47,7 @@ int keyCodes[NUM_INPUTS] = {
   KEY_UP_ARROW,      // up arrow pad
   KEY_DOWN_ARROW,    // down arrow pad
   'k',     // left arrow pad
-  'l',      // right arrow pad
+  'l',     // right arrow pad
   's',     // space button pad
   'a',     // click button pad
 
@@ -70,3 +70,6 @@ int keyCodes[NUM_INPUTS] = {
 };
 
 ```
+
+4. As depicted in the diagram below, use alligator clips to connect the following together (from the back of the Makey Makey to the end strands of the conductive thread from the mat).
+
