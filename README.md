@@ -35,7 +35,7 @@ Click this link to play the [game](http://gongme.dev.fast.sheridanc.on.ca/fruita
 #### Steps:
 1. Plug in the Classic Makey Makey board with the USB cord to your computer.
 
-2. Download and install the Arduino IDE with the Makey Makey Firmware using the following online resource [makey makey remap](https://learn.sparkfun.com/tutorials/makey-makey-advanced-guide).
+2. Download and install the Arduino IDE with the Makey Makey Firmware using the following online resource [MaKey MaKey Advanced Guide](https://learn.sparkfun.com/tutorials/makey-makey-advanced-guide).
 
 3. In settings.h tab, modify the inputs for the click button pad, space button pad, right arrow pad and left arrow pad to ‘a’, ‘s’, ‘k’, and ‘l’.
 
