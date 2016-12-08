@@ -73,3 +73,5 @@ int keyCodes[NUM_INPUTS] = {
 
 4. As depicted in the diagram below, use alligator clips to connect the following together (from the back of the Makey Makey to the end strands of the conductive thread from the mat).
 
+5. 
+
