@@ -4,6 +4,8 @@
 # Fruitails
 **Fruitails** is a split screen catch game with an interactive mat controller. Players control the movement of two characters, with their feet, at the same time. There are four buttons on the mat for arrow keys. LED lights are synced with all keypress to indicate that the mat is responsive.
 
+Click this link to play the [game](http://gongme.dev.fast.sheridanc.on.ca/fruitail/)
+
 ## Instructions - How To Build
 
 ### I. Build your own Mat controller!
@@ -24,12 +26,10 @@
 ![game instruction screen](/_github/conductive_thread.png)
 ![game instruction screen](/_github/mat_back.png)
 
-### II. Connect your Mat controller to the Makey Makey!
+### II. Connect your mat controller to the Makey Makey!
 
 #### Materials:
 * Classic Makey Makey board
-* Breadboard
-* LED lights
 * Alligator clips
 * Wires
 
@@ -40,40 +40,55 @@
 
 3. In settings.h tab, modify the inputs for the click button pad, space button pad, right arrow pad and left arrow pad to ‘a’, ‘s’, ‘k’, and ‘l’.
 
-```
-//Modifications to the ‘settings.h’ settings from makey_makey_1_4_2.ino (Arduino IDE)
+  ```
+  //Modifications to the ‘settings.h’ settings from makey_makey_1_4_2.ino (Arduino IDE)
 
-int keyCodes[NUM_INPUTS] = {
+  int keyCodes[NUM_INPUTS] = {
 
-  KEY_UP_ARROW,      // up arrow pad
-  KEY_DOWN_ARROW,    // down arrow pad
-  'k',     // left arrow pad
-  'l',     // right arrow pad
-  's',     // space button pad
-  'a',     // click button pad
+    KEY_UP_ARROW,      // up arrow pad
+    KEY_DOWN_ARROW,    // down arrow pad
+    'k',     // left arrow pad
+    'l',     // right arrow pad
+    's',     // space button pad
+    'a',     // click button pad
 
-  //back left side (keyboard pins)
-  'w',                // pin D5
-  'a',                // pin D4
-  's',                // pin D3
-  'd',                // pin D2
-  'f',                // pin D1
-  'g',                // pin D0
+    //back left side (keyboard pins)
+    'w',                // pin D5
+    'a',                // pin D4
+    's',                // pin D3
+    'd',                // pin D2
+    'f',                // pin D1
+    'g',                // pin D0
 
-  //back right side (mouse pins)
+    //back right side (mouse pins)
 
-  MOUSE_MOVE_UP,      // pin A5
-  MOUSE_MOVE_DOWN,    // pin A4
-  MOUSE_MOVE_LEFT,    // pin A3
-  MOUSE_MOVE_RIGHT,   // pin A2
-  MOUSE_LEFT,         // pin A1
-  MOUSE_RIGHT         // pin A0
-};
+    MOUSE_MOVE_UP,      // pin A5
+    MOUSE_MOVE_DOWN,    // pin A4
+    MOUSE_MOVE_LEFT,    // pin A3
+    MOUSE_MOVE_RIGHT,   // pin A2
+    MOUSE_LEFT,         // pin A1
+    MOUSE_RIGHT         // pin A0
+  };
 
-```
+  ```
 
 4. As depicted in the diagram below, use alligator clips to connect the following together (from the back of the Makey Makey to the end strands of the conductive thread from the mat).
 ![game instruction screen](/_github/alligator_connect copy.png)
 
-5. 
+5. Extend the ground of the Makey Makey by connect together five alligator clips from the ground pad and to the player’s hand.
+
+### III. Connect the LED lights!
+
+#### Materials:
+* Breadboard
+* LED lights
+
+#### Steps:
+1. Use wires to extend the D14 (keyboard) output to the negative and ground to the positive input of the breadboard. 
+
+2. Connect LED light negative to breadboard negative, ground to breadboard ground
+
+Complete Diagram
+![game instruction screen](/_github/diagram.png)
+
 
