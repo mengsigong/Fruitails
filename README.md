@@ -36,6 +36,37 @@
 #### Steps:
 1. Plug in the Classic Makey Makey board with the USB cord to your computer.
 
-2. Download and install the Arduino IDE with the Makey Makey Firmware using the following online resource [makey makey remap link](http://www.makeymakey.com/remap/).
+2. Download and install the Arduino IDE with the Makey Makey Firmware using the following online resource [makey makey remap](http://www.makeymakey.com/remap/).
 
 3. In settings.h tab, modify the inputs for the click button pad, space button pad, right arrow pad and left arrow pad to ‘a’, ‘s’, ‘k’, and ‘l’.
+
+Modifications to the ‘settings.h’ settings from makey_makey_1_4_2.ino (Arduino IDE)
+```
+int keyCodes[NUM_INPUTS] = {
+
+  KEY_UP_ARROW,      // up arrow pad
+  KEY_DOWN_ARROW,    // down arrow pad
+  'k',     // left arrow pad
+  'l',      // right arrow pad
+  's',     // space button pad
+  'a',     // click button pad
+
+  //back left side (keyboard pins)
+  'w',                // pin D5
+  'a',                // pin D4
+  's',                // pin D3
+  'd',                // pin D2
+  'f',                // pin D1
+  'g',                // pin D0
+
+  //back right side (mouse pins)
+
+  MOUSE_MOVE_UP,      // pin A5
+  MOUSE_MOVE_DOWN,    // pin A4
+  MOUSE_MOVE_LEFT,    // pin A3
+  MOUSE_MOVE_RIGHT,   // pin A2
+  MOUSE_LEFT,         // pin A1
+  MOUSE_RIGHT         // pin A0
+};
+
+```
